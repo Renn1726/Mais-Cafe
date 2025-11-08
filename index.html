@@ -13,27 +13,22 @@
       }
 
 
-tml {
-      height: 100%;
-      width: 100%;
-      background: linear-gradient(135deg, #61321c, #7a3b26, #4f1f12);
-    }
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(135deg, #61321c, #7a3b26, #4f1f12);
+    /* 🔧 Corrige bordas brancas no Safari sem mudar layout */
+    min-height: 100vh;
+  }
 
-    body {
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #61321c, #7a3b26, #4f1f12);
-      overflow-x: hidden;
-      padding: 1rem;
-
-      /* 🩶 Apenas correção discreta pro Safari */
-      padding-top: constant(safe-area-inset-top);
-      padding-top: env(safe-area-inset-top);
-      padding-bottom: constant(safe-area-inset-bottom);
-      padding-bottom: env(safe-area-inset-bottom);
-    }
+  body {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
 
 
       /* Loading Screen */
