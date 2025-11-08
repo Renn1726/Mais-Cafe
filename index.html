@@ -13,19 +13,25 @@
       }
 
 
-      html, body {
-        height: 100%;
-        width: 100%;
-        background-color: #4b2e1a; /* cor de fundo principal do site */
-        margin: 0;
-        padding: 0;
-        font-family: Arial, sans-serif;
+    html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 
-        /* 🔧 Ajuste para iPhones com notch (remove bordas brancas) */
-        padding-top: env(safe-area-inset-top);
-        padding-bottom: env(safe-area-inset-bottom);
-        background-clip: border-box;
-      }
+  /* fundo marrom do site */
+  background: linear-gradient(180deg, #4b2e1a, #7b4a2b);
+  background-attachment: fixed;
+
+  /* remove bordas brancas no iPhone */
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  background-clip: border-box;
+
+  /* centralização perfeita */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
       /* Loading Screen */
       .loading-screen {
