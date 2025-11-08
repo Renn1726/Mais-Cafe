@@ -15,28 +15,34 @@
         box-sizing: border-box;
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
       }
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #6b2d1f; /* cor de fundo marrom */
+  overflow: hidden;
+  border: none;
+}
 
-      html {
-        height: 100%;
-        width: 100%;
-        background-color: #4f1f12; /* cor sólida mais escura do gradiente */
-        background-image: linear-gradient(135deg, #61321c, #7a3b26, #4f1f12);
-        background-repeat: no-repeat;
-        background-attachment: fixed;
-        background-size: cover;
-        overscroll-behavior: none; /* 🔥 impede o “puxar branco” do Safari */
-      }
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #6b2d1f;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
 
-      body {
-        min-height: 100vh;
-        background: transparent; /* usa o fundo do html */
-        overflow-x: hidden;
-        margin: 0;
-        padding: 1rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-      }
+/* Força Safari e iPhones com notch a cobrir toda a área */
+@supports (padding: env(safe-area-inset-top)) {
+  html, body {
+    padding: env(safe-area-inset-top) env(safe-area-inset-right)
+             env(safe-area-inset-bottom) env(safe-area-inset-left);
+    background-color: #6b2d1f;
+  }
+}
+
 
       /* Todo o resto do seu CSS permanece idêntico */
       /* Loading Screen */
