@@ -13,25 +13,27 @@
       }
 
 
-    html, body {
+html {
   height: 100%;
-  margin: 0;
-  padding: 0;
+  width: 100%;
+  background: linear-gradient(135deg, #61321c, #7a3b26, #4f1f12);
+}
 
-  /* fundo marrom do site */
-  background: linear-gradient(180deg, #4b2e1a, #7b4a2b);
-  background-attachment: fixed;
-
-  /* remove bordas brancas no iPhone */
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
-  background-clip: border-box;
-
-  /* centralização perfeita */
+body {
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  background: linear-gradient(135deg, #61321c, #7a3b26, #4f1f12);
+  overflow-x: hidden;
+  padding: 1rem;
+
+  /* ✅ Apenas correção para o Safari (sem mudar nada visualmente) */
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  background-clip: border-box;
 }
+
 
       /* Loading Screen */
       .loading-screen {
