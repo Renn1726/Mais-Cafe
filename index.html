@@ -13,26 +13,27 @@
       }
 
 
-html {
-  height: 100%;
-  width: 100%;
-  background: linear-gradient(135deg, #61321c, #7a3b26, #4f1f12);
-}
+tml {
+      height: 100%;
+      width: 100%;
+      background: linear-gradient(135deg, #61321c, #7a3b26, #4f1f12);
+    }
 
-body {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #61321c, #7a3b26, #4f1f12);
-  overflow-x: hidden;
-  padding: 1rem;
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #61321c, #7a3b26, #4f1f12);
+      overflow-x: hidden;
+      padding: 1rem;
 
-  /* ✅ Apenas correção para o Safari (sem mudar nada visualmente) */
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
-  background-clip: border-box;
-}
+      /* 🩶 Apenas correção discreta pro Safari */
+      padding-top: constant(safe-area-inset-top);
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: constant(safe-area-inset-bottom);
+      padding-bottom: env(safe-area-inset-bottom);
+    }
 
 
       /* Loading Screen */
