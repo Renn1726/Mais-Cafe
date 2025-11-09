@@ -2,7 +2,10 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
     <title>Mais Café</title>
     <style>
       * {
@@ -18,8 +21,8 @@
       }
 
       body {
-    min-height: 100vh;
-    min-height: -webkit-fill-available;
+        min-height: 100vh;
+        min-height: -webkit-fill-available;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -28,7 +31,6 @@
         padding: 1rem;
       }
 
-      /* Loading Screen */
       .loading-screen {
         position: fixed;
         top: 0;
@@ -108,7 +110,6 @@
         letter-spacing: 1px;
       }
 
-      /* Main Content */
       .main-content {
         opacity: 0;
         transition: opacity 0.5s ease;
@@ -121,7 +122,6 @@
         opacity: 1;
       }
 
-      /* Decorative Circles */
       .pattern-circle {
         position: fixed;
         border-radius: 50%;
@@ -147,7 +147,6 @@
         background: #ea580c;
       }
 
-      /* Floating Icons */
       .floating-icon {
         position: fixed;
         opacity: 0.15;
@@ -187,7 +186,6 @@
         }
       }
 
-      /* Card */
       .card {
         position: relative;
         background: rgba(255, 255, 255, 0.95);
@@ -248,9 +246,59 @@
         font-size: 1.25rem;
         font-weight: 500;
         color: #a65d3c;
-        margin-bottom: 1.125rem;
+        margin-bottom: 1.25rem;
         letter-spacing: 0.3px;
         line-height: 1.35;
+      }
+
+      /* Status minimalista e clean */
+      .status-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1.75rem;
+      }
+
+      .status-indicator {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        color: #666;
+      }
+
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+      }
+
+      .status-indicator.open .status-dot {
+        background: #22c55e;
+        box-shadow: 0 0 8px rgba(34, 197, 94, 0.4);
+      }
+
+      .status-indicator.closed .status-dot {
+        background: #94a3b8;
+      }
+
+      .status-indicator.open {
+        color: #22c55e;
+      }
+
+      .status-indicator.closed {
+        color: #94a3b8;
+      }
+
+      .hours-text {
+        font-size: 0.8rem;
+        color: #94a3b8;
+        font-weight: 400;
+        letter-spacing: 0.3px;
       }
 
       .card-divider {
@@ -270,13 +318,103 @@
       .divider-icon {
         filter: invert(82%) sepia(31%) saturate(405%) hue-rotate(349deg)
           brightness(86%) contrast(89%);
-
         width: 1rem;
         height: 1rem;
         color: #a65d3c;
       }
 
-      /* Buttons */
+      /* Carrossel */
+      .carousel-container {
+        width: 100%;
+        margin-bottom: 2rem;
+      }
+
+      .carousel {
+        position: relative;
+        width: 100%;
+        height: 240px;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      .carousel-slides {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+
+      .carousel-slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 1.2s ease-in-out;
+      }
+
+      .carousel-slide.active {
+        opacity: 1;
+      }
+
+      .carousel-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: brightness(0.85) contrast(1.1);
+      }
+
+      .carousel-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(
+          to top,
+          rgba(97, 50, 28, 0.95),
+          transparent
+        );
+        padding: 2.5rem 1.25rem 3rem;
+        z-index: 2;
+      }
+
+      .carousel-text {
+        color: white;
+        font-size: 1.25rem;
+        font-weight: 700;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        letter-spacing: 0.5px;
+        margin: 0;
+      }
+
+      .carousel-dots {
+        position: absolute;
+        bottom: 0.75rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 0.5rem;
+        z-index: 3;
+      }
+
+      .carousel-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.4);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+      }
+
+      .carousel-dot.active {
+        background: white;
+        width: 10px;
+        height: 10px;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+      }
+
       .buttons {
         display: flex;
         flex-direction: column;
@@ -304,352 +442,614 @@
       }
 
       .btn:active {
-        transform: scale(0.95);
+        transform: scale(0.96);
+      }
+
+      .btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        transition: left 0.6s ease;
+      }
+
+      .btn:hover::before {
+        left: 100%;
       }
 
       .btn:hover {
-        transform: scale(1.08);
-        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.35);
+        transform: translateY(-2px);
+        box-shadow: 0 12px 20px rgba(0, 0, 0, 0.25);
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #a65d3c, #c4815a);
+      }
+
+      .btn-secondary {
+        background: linear-gradient(135deg, #8d4d27, #a65d3c);
+      }
+
+      .btn-tertiary {
+        background: linear-gradient(135deg, #c4815a, #d6a372);
       }
 
       .btn-icon {
-        position: absolute;
-        left: 16px;
-        width: 24px;
-        height: 24px;
-        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-right: 0.75rem;
+        filter: brightness(0) invert(1);
       }
 
-      .btn:hover .btn-icon {
-        transform: scale(1.1);
+      .footer {
+        margin-top: 2.5rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(166, 93, 60, 0.15);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
       }
 
-      .btn-text {
-        flex: 1;
-        text-align: center;
+      .social-links {
+        display: flex;
+        gap: 1rem;
       }
 
-      .btn-whatsapp {
-        background: linear-gradient(to right, #10b981, #059669);
-      }
-
-      .btn-whatsapp:hover {
-        background: linear-gradient(to right, #059669, #047857);
-      }
-
-      .btn-menu {
-        background: linear-gradient(to right, #f59e0b, #ea580c);
-      }
-
-      .btn-menu:hover {
-        background: linear-gradient(to right, #d97706, #c2410c);
-      }
-
-      .btn-location {
-        background: linear-gradient(to right, #3b82f6, #2563eb);
-      }
-
-      .btn-location:hover {
-        background: linear-gradient(to right, #2563eb, #1d4ed8);
-      }
-
-      /* Footer */
-      .card-footer {
-        padding: 1.25rem 1.5rem;
-        background: linear-gradient(to right, #fffbeb, #fff7ed);
-        border-top: 1px solid #fde68a;
-        text-align: center;
-      }
-
-      .footer-text {
-        color: #78350f;
-        font-weight: 500;
-        font-size: 0.875rem;
-        line-height: 1.4;
-        margin-bottom: 0.35rem;
-      }
-
-      .footer-sub {
+      .social-link {
+        width: 52px;
+        height: 52px;
         display: flex;
         align-items: center;
         justify-content: center;
+        background: linear-gradient(135deg, #a65d3c, #c4815a);
+        border-radius: 50%;
+        color: white;
+        text-decoration: none;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .social-link::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        transition: left 0.6s ease;
+      }
+
+      .social-link:hover::before {
+        left: 100%;
+      }
+
+      .social-link:hover {
+        transform: translateY(-3px) scale(1.05);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+      }
+
+      .social-link:active {
+        transform: scale(0.95);
+      }
+
+      .social-icon {
+        width: 1.5rem;
+        height: 1.5rem;
+        filter: brightness(0) invert(1);
+        position: relative;
+        z-index: 1;
+      }
+
+      .footer-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .footer-text {
+        font-size: 0.875rem;
+        color: #8d4d27;
+        text-align: center;
+        line-height: 1.6;
+        font-weight: 500;
+      }
+
+      .footer-address {
+        font-size: 0.8rem;
+        color: #a65d3c;
+        text-align: center;
+        line-height: 1.5;
+        max-width: 280px;
+      }
+
+      .footer-contact {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
         gap: 0.5rem;
-        color: #f59e0b;
-        font-size: 0.75rem;
-        font-weight: 400;
+        font-size: 0.8rem;
+        color: #a65d3c;
       }
 
-      .footer-sub img {
-        filter: invert(56%) sepia(84%) saturate(1713%) hue-rotate(4deg)
-          brightness(101%) contrast(96%);
-
-        width: 14px;
-        height: 14px;
+      .footer-contact a {
+        color: #a65d3c;
+        text-decoration: none;
+        transition: color 0.3s ease;
       }
 
-      /* Animations */
-      .animate-fall {
-        opacity: 0;
-        transform: translateY(-50px);
+      .footer-contact a:hover {
+        color: #8d4d27;
       }
 
-      .animate-fall.show {
-        animation: fallIn 0.6s ease forwards;
-      }
-
-      @keyframes fallIn {
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      .delay-1 {
-        animation-delay: 0.1s;
-      }
-      .delay-2 {
-        animation-delay: 0.2s;
-      }
-      .delay-3 {
-        animation-delay: 0.3s;
-      }
-      .delay-4 {
-        animation-delay: 0.4s;
-      }
-      .delay-5 {
-        animation-delay: 0.5s;
-      }
-      .delay-6 {
-        animation-delay: 0.6s;
-      }
-
-      /* Responsive Design */
       @media (max-width: 480px) {
-        body {
-          padding: 0.5rem;
-        }
-        .card {
-          border-radius: 24px;
-        }
         .card-content {
           padding: 2rem 1.25rem;
         }
+
         .logo-container {
           width: 130px;
           height: 130px;
         }
+
         .card-title {
-          font-size: 2rem;
+          font-size: 2.125rem;
         }
+
         .card-subtitle {
-          font-size: 1rem;
+          font-size: 1.125rem;
         }
+
+        .carousel {
+          height: 200px;
+        }
+
+        .carousel-text {
+          font-size: 1.1rem;
+        }
+
+        .carousel-overlay {
+          padding: 2rem 1rem 2.75rem;
+        }
+
+        .status-indicator {
+          font-size: 0.8rem;
+        }
+
+        .hours-text {
+          font-size: 0.75rem;
+        }
+
         .btn {
-          height: 56px;
-          font-size: 1rem;
+          height: 58px;
+          font-size: 1.0625rem;
         }
-        .btn-icon {
-          width: 20px;
-          height: 20px;
-          left: 12px;
+
+        .social-link {
+          width: 48px;
+          height: 48px;
         }
-        .floating-icon {
-          display: none;
+
+        .social-icon {
+          width: 1.375rem;
+          height: 1.375rem;
         }
-        .loading-logo {
-          width: 160px;
-          height: 160px;
+
+        .footer-text,
+        .footer-address,
+        .footer-contact {
+          font-size: 0.8rem;
         }
       }
 
       @media (min-width: 481px) and (max-width: 768px) {
-        .card-title {
-          font-size: 2.25rem;
-        }
-        .logo-container {
-          width: 140px;
-          height: 140px;
+        .card-content {
+          padding: 2.25rem 1.375rem;
         }
       }
     </style>
   </head>
   <body>
-    <!-- Loading Screen -->
     <div class="loading-screen" id="loadingScreen">
       <div class="loading-logo">
-        <!-- Substitua o src abaixo pela sua imagem de carregamento -->
-        <img src="IMAGES/LOGO.png" alt="Logo" />
+        <img
+          src="https://i.pinimg.com/736x/f9/aa/be/f9aabe690a4c63d2ccf02fe1adaafd46.jpg"
+          alt="Logo Mais Café"
+        />
       </div>
       <div class="loading-bar-container">
         <div class="loading-bar" id="loadingBar"></div>
       </div>
-      <p class="loading-text">Carregando...</p>
+      <div class="loading-text">Preparando seu café...</div>
     </div>
 
-    <!-- Background Decorations -->
     <div class="pattern-circle circle-top-left"></div>
     <div class="pattern-circle circle-bottom-right"></div>
 
-    <!-- Floating Icons -->
-    <!-- Substitua o src abaixo pela sua imagem do ícone flutuante superior -->
     <div class="floating-icon top">
-      <img src="IMAGES/chicara copy 2.png" alt="Ícone" />
+      <img
+        src="https://i.pinimg.com/736x/f9/aa/be/f9aabe690a4c63d2ccf02fe1adaafd46.jpg"
+        alt="Ícone café"
+      />
     </div>
-
-    <!-- Substitua o src abaixo pela sua imagem do ícone flutuante inferior -->
     <div class="floating-icon bottom">
-      <img src="IMAGES/chicara copy.png" alt="Ícone" />
+      <img
+        src="https://i.pinimg.com/736x/f9/aa/be/f9aabe690a4c63d2ccf02fe1adaafd46.jpg"
+        alt="Ícone café"
+      />
     </div>
 
-    <!-- Main Content -->
     <div class="main-content" id="mainContent">
-      <div class="card animate-fall delay-1">
+      <div class="card">
         <div class="card-header"></div>
 
         <div class="card-content">
-          <div class="logo-container animate-fall delay-2">
-            <!-- Substitua o src abaixo pela sua logo principal -->
-            <img src="IMAGES/LOGO.png" alt="Logo Mais Café" />
+          <div class="logo-container">
+            <img
+              src="https://i.pinimg.com/736x/f9/aa/be/f9aabe690a4c63d2ccf02fe1adaafd46.jpg"
+              alt="Logo Mais Café"
+            />
           </div>
 
-          <h1 class="card-title animate-fall delay-3">Mais Café</h1>
-          <p class="card-subtitle animate-fall delay-4">
-            O Sabor que insipira!
-          </p>
+          <h1 class="card-title">Mais Café</h1>
+          <p class="card-subtitle">Experiência Premium em Cada Xícara</p>
 
-          <div class="card-divider animate-fall delay-4">
+          <!-- Status minimalista -->
+          <div class="status-wrapper">
+            <div class="status-indicator" id="statusIndicator">
+              <span class="status-dot"></span>
+              <span id="statusText">Verificando...</span>
+            </div>
+            <div class="hours-text">Ter–Dom • 07h30–10h30 • 16h–22h</div>
+          </div>
+
+          <div class="card-divider">
             <div class="divider-line"></div>
-            <img src="IMAGES/chicara.png" alt="Divisor" class="divider-icon" />
+            <svg
+              class="divider-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path
+                d="M2 21h19v-3H2v3zM20 8H3V6h17v2zm0-6H3c0 1.66 1.34 3 3 3h11c1.66 0 3-1.34 3-3z"
+              />
+            </svg>
             <div class="divider-line"></div>
+          </div>
+
+          <!-- Carrossel -->
+          <div class="carousel-container">
+            <div class="carousel">
+              <div class="carousel-slides">
+                <div class="carousel-slide active">
+                  <img
+                    src="https://images.unsplash.com/photo-1511920170033-f8396924c348?w=800&q=80"
+                    alt="Café especial"
+                  />
+                  <div class="carousel-overlay">
+                    <p class="carousel-text">Cafés Especiais Selecionados</p>
+                  </div>
+                </div>
+                <div class="carousel-slide">
+                  <img
+                    src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=800&q=80"
+                    alt="Ambiente aconchegante"
+                  />
+                  <div class="carousel-overlay">
+                    <p class="carousel-text">Ambiente Sofisticado</p>
+                  </div>
+                </div>
+                <div class="carousel-slide">
+                  <img
+                    src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=800&q=80"
+                    alt="Arte em café"
+                  />
+                  <div class="carousel-overlay">
+                    <p class="carousel-text">Arte em Cada Xícara</p>
+                  </div>
+                </div>
+                <div class="carousel-slide">
+                  <img
+                    src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&q=80"
+                    alt="Grãos premium"
+                  />
+                  <div class="carousel-overlay">
+                    <p class="carousel-text">Grãos Premium Importados</p>
+                  </div>
+                </div>
+              </div>
+              <div class="carousel-dots">
+                <span class="carousel-dot active" data-slide="0"></span>
+                <span class="carousel-dot" data-slide="1"></span>
+                <span class="carousel-dot" data-slide="2"></span>
+                <span class="carousel-dot" data-slide="3"></span>
+              </div>
+            </div>
           </div>
 
           <div class="buttons">
-            <button
-              class="btn btn-whatsapp animate-fall delay-5"
-              onclick="openWhatsApp()"
-            >
+            <button class="btn btn-primary" id="menuBtn">
               <svg
                 class="btn-icon"
                 xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
                 viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+              </svg>
+              Ver Cardápio
+            </button>
+
+            <button class="btn btn-secondary" id="whatsappBtn">
+              <svg
+                class="btn-icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
               >
                 <path
                   d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"
                 />
               </svg>
-              <span class="btn-text">WhatsApp</span>
+              Fazer Pedido
             </button>
 
-            <button
-              class="btn btn-menu animate-fall delay-5"
-              onclick="openMenu()"
-            >
+            <button class="btn btn-tertiary" id="locationBtn">
               <svg
                 class="btn-icon"
                 xmlns="http://www.w3.org/2000/svg"
-                fill="none"
                 viewBox="0 0 24 24"
-                stroke="currentColor"
+                fill="currentColor"
               >
                 <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+                  d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
                 />
               </svg>
-              <span class="btn-text">Cardápio</span>
-            </button>
-
-            <button
-              class="btn btn-location animate-fall delay-6"
-              onclick="openLocation()"
-            >
-              <svg
-                class="btn-icon"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                />
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                />
-              </svg>
-              <span class="btn-text">Localização</span>
+              Nossa Localização
             </button>
           </div>
-        </div>
 
-        <div class="card-footer">
-          <p class="footer-text">
-            Venha aproveitar as melhores delícias no Mais Café
-          </p>
-          <div class="footer-sub">
-            <img src="IMAGES/chicara.png" alt="" />
-            <span>Sabor que aquece o coração</span>
+          <div class="footer">
+            <div class="social-links">
+              <a href__="#" class="social-link" aria-label="Instagram">
+                <svg
+                  class="social-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
+                  />
+                </svg>
+              </a>
+
+              <a href__="#" class="social-link" aria-label="Facebook">
+                <svg
+                  class="social-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
+                  />
+                </svg>
+              </a>
+
+              <a href__="#" class="social-link" aria-label="WhatsApp">
+                <svg
+                  class="social-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path
+                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"
+                  />
+                </svg>
+              </a>
+            </div>
+
+            <div class="footer-info">
+              <p class="footer-text">Servindo os melhores cafés desde 2020</p>
+              <p class="footer-address">
+                Rua do Café, 123 - Centro<br />
+                São Paulo, SP
+              </p>
+              <div class="footer-contact">
+                <a href__="tel:+5511999999999">(11) 99999-9999</a>
+                <a href__="mailto:contato@maiscafe.com.br"
+                  >contato@maiscafe.com.br</a
+                >
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
     <script>
-      // Loading simulation
-      let progress = 0;
-      const loadingBar = document.getElementById("loadingBar");
-      const loadingScreen = document.getElementById("loadingScreen");
-      const mainContent = document.getElementById("mainContent");
+      // Loading Screen
+      window.addEventListener("load", function () {
+        let progress = 0;
+        const loadingBar = document.getElementById("loadingBar");
+        const loadingScreen = document.getElementById("loadingScreen");
+        const mainContent = document.getElementById("mainContent");
 
-      const interval = setInterval(() => {
-        progress += Math.random() * 15;
-        if (progress >= 100) {
-          progress = 100;
+        const interval = setInterval(() => {
+          progress += Math.random() * 15;
+          if (progress > 100) progress = 100;
+
           loadingBar.style.width = progress + "%";
 
-          setTimeout(() => {
-            loadingScreen.classList.add("hidden");
-            mainContent.classList.add("visible");
-
+          if (progress === 100) {
+            clearInterval(interval);
             setTimeout(() => {
-              const elements = document.querySelectorAll(".animate-fall");
-              elements.forEach((el) => el.classList.add("show"));
-            }, 100);
-          }, 500);
+              loadingScreen.classList.add("hidden");
+              mainContent.classList.add("visible");
+            }, 400);
+          }
+        }, 150);
+      });
 
-          clearInterval(interval);
-        } else {
-          loadingBar.style.width = progress + "%";
+      // Verificar se está aberto - Terça a Domingo, 07:30-10:30 e 16:00-22:00
+      function checkIfOpen() {
+        const now = new Date();
+        const day = now.getDay(); // 0 = Domingo, 1 = Segunda, ..., 6 = Sábado
+        const hours = now.getHours();
+        const minutes = now.getMinutes();
+        const currentTime = hours * 60 + minutes; // Converter para minutos totais
+
+        // Segunda-feira (1) = fechado
+        if (day === 1) {
+          return false;
         }
-      }, 200);
 
-      // Button functions - SUBSTITUA OS LINKS ABAIXO
-      function openWhatsApp() {
-        // Substitua pelo seu número de WhatsApp (formato: 5511999999999)
-        window.open("https://wa.me/5511999999999", "_blank");
+        // Horários de funcionamento
+        const morning_start = 7 * 60 + 30; // 07:30 = 450 minutos
+        const morning_end = 10 * 60 + 30; // 10:30 = 630 minutos
+        const afternoon_start = 16 * 60; // 16:00 = 960 minutos
+        const afternoon_end = 22 * 60; // 22:00 = 1320 minutos
+
+        // Verificar se está dentro dos horários
+        const isOpen =
+          (currentTime >= morning_start && currentTime <= morning_end) ||
+          (currentTime >= afternoon_start && currentTime <= afternoon_end);
+
+        return isOpen;
       }
 
-      function openMenu() {
-        // Substitua pelo link do seu cardápio
-        window.open("https://seu-link-cardapio.com", "_blank");
+      function updateStatus() {
+        const statusIndicator = document.getElementById("statusIndicator");
+        const statusText = document.getElementById("statusText");
+        const isOpen = checkIfOpen();
+
+        if (isOpen) {
+          statusIndicator.classList.remove("closed");
+          statusIndicator.classList.add("open");
+          statusText.textContent = "Aberto agora";
+        } else {
+          statusIndicator.classList.remove("open");
+          statusIndicator.classList.add("closed");
+          statusText.textContent = "Fechado";
+        }
       }
 
-      function openLocation() {
-        // Substitua pelas suas coordenadas ou endereço
-        window.open(
-          "https://www.google.com/maps/search/?api=1&query=Mais+Cafe",
-          "_blank"
-        );
-      }
+      // Atualizar status ao carregar e a cada minuto
+      updateStatus();
+      setInterval(updateStatus, 60000);
+
+      // Carrossel JavaScript
+      (function () {
+        const slides = document.querySelectorAll(".carousel-slide");
+        const dots = document.querySelectorAll(".carousel-dot");
+        let currentSlide = 0;
+        const slideInterval = 4000;
+        let autoplayInterval;
+
+        function showSlide(index) {
+          slides.forEach((slide) => slide.classList.remove("active"));
+          dots.forEach((dot) => dot.classList.remove("active"));
+
+          currentSlide = index;
+          if (currentSlide >= slides.length) currentSlide = 0;
+          if (currentSlide < 0) currentSlide = slides.length - 1;
+
+          slides[currentSlide].classList.add("active");
+          dots[currentSlide].classList.add("active");
+        }
+
+        function nextSlide() {
+          showSlide(currentSlide + 1);
+        }
+
+        function startAutoplay() {
+          autoplayInterval = setInterval(nextSlide, slideInterval);
+        }
+
+        function stopAutoplay() {
+          clearInterval(autoplayInterval);
+        }
+
+        dots.forEach((dot, index) => {
+          dot.addEventListener("click", () => {
+            stopAutoplay();
+            showSlide(index);
+            startAutoplay();
+          });
+        });
+
+        const carousel = document.querySelector(".carousel");
+        carousel.addEventListener("mouseenter", stopAutoplay);
+        carousel.addEventListener("mouseleave", startAutoplay);
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        carousel.addEventListener("touchstart", (e) => {
+          touchStartX = e.changedTouches[0].screenX;
+          stopAutoplay();
+        });
+
+        carousel.addEventListener("touchend", (e) => {
+          touchEndX = e.changedTouches[0].screenX;
+          handleSwipe();
+          startAutoplay();
+        });
+
+        function handleSwipe() {
+          if (touchEndX < touchStartX - 50) {
+            showSlide(currentSlide + 1);
+          }
+          if (touchEndX > touchStartX + 50) {
+            showSlide(currentSlide - 1);
+          }
+        }
+
+        startAutoplay();
+      })();
+
+      // Botões
+      document.getElementById("menuBtn").addEventListener("click", function () {
+        window.open("https://example.com/cardapio", "_blank");
+      });
+
+      document
+        .getElementById("whatsappBtn")
+        .addEventListener("click", function () {
+          window.open(
+            "https://wa.me/5511999999999?text=Olá,%20gostaria%20de%20fazer%20um%20pedido!",
+            "_blank"
+          );
+        });
+
+      document
+        .getElementById("locationBtn")
+        .addEventListener("click", function () {
+          window.open(
+            "https://maps.google.com/?q=Cafeteria+Mais+Cafe",
+            "_blank"
+          );
+        });
     </script>
   </body>
 </html>
