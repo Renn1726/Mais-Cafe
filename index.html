@@ -21,7 +21,7 @@
       }
 
       body {
-        min-height: 100vh;
+        min-height: 100dvh;
         min-height: -webkit-fill-available;
         display: flex;
         justify-content: center;
@@ -599,6 +599,135 @@
         color: #8d4d27;
       }
 
+      .pdf-viewer-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0);
+        backdrop-filter: blur(0);
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        padding: 1rem;
+      }
+      .pdf-viewer-overlay.active {
+        opacity: 1;
+        visibility: visible;
+        background: rgba(0, 0, 0, 0.85);
+        backdrop-filter: blur(8px);
+      }
+      .pdf-viewer-container {
+        width: 100%;
+        max-width: 1000px;
+        height: 90vh;
+        background: #fff;
+        border-radius: 24px;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+        overflow: hidden;
+        transform: scale(0.8) translateY(50px);
+        opacity: 0;
+        transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        display: flex;
+        flex-direction: column;
+      }
+      .pdf-viewer-overlay.active .pdf-viewer-container {
+        transform: scale(1) translateY(0);
+        opacity: 1;
+      }
+      .pdf-viewer-header {
+        padding: 1.5rem 2rem;
+        background: linear-gradient(135deg, #a65d3c, #8d4d27);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 3px solid rgba(255, 255, 255, 0.2);
+      }
+      .pdf-viewer-title {
+        color: #fff;
+        font-size: 1.5rem;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+      .pdf-close-btn {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: #fff;
+        font-size: 1.5rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+      }
+      .pdf-close-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: rotate(90deg) scale(1.1);
+      }
+      .pdf-iframe-wrapper {
+        flex: 1;
+        position: relative;
+        overflow: hidden;
+        background: #f5f5f5;
+      }
+      .pdf-iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+      .pdf-loading {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+      }
+      .pdf-loading-spinner {
+        width: 50px;
+        height: 50px;
+        border: 4px solid rgba(166, 93, 60, 0.2);
+        border-top-color: #a65d3c;
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .pdf-loading-text {
+        color: #a65d3c;
+        font-weight: 500;
+        font-size: 1rem;
+      }
+      @media (max-width: 768px) {
+        .pdf-viewer-container {
+          height: 95vh;
+          border-radius: 20px;
+        }
+        .pdf-viewer-header {
+          padding: 1rem 1.5rem;
+        }
+        .pdf-viewer-title {
+          font-size: 1.2rem;
+        }
+      }
+
       @media (max-width: 480px) {
         .card-content {
           padding: 2rem 1.25rem;
@@ -667,6 +796,37 @@
     </style>
   </head>
   <body>
+    <div class="pdf-viewer-overlay" id="pdfViewerOverlay">
+      <div class="pdf-viewer-container">
+        <div class="pdf-viewer-header">
+          <div class="pdf-viewer-title">
+            <svg
+              width="24"
+              height="24"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+              />
+            </svg>
+            Cardápio
+          </div>
+          <button class="pdf-close-btn" id="pdfCloseBtn">×</button>
+        </div>
+        <div class="pdf-iframe-wrapper">
+          <div class="pdf-loading" id="pdfLoading">
+            <div class="pdf-loading-spinner"></div>
+            <div class="pdf-loading-text">Carregando cardápio...</div>
+          </div>
+          <iframe id="pdfIframe" class="pdf-iframe"></iframe>
+        </div>
+      </div>
+    </div>
     <div class="loading-screen" id="loadingScreen">
       <div class="loading-logo">
         <img src="IMAGES/LOGO.png" alt="Logo Mais Café" />
@@ -765,11 +925,7 @@
           </div>
 
           <div class="buttons">
-            <button
-              class="btn btn-primary"
-              id="menuBtn"
-                onclick="window.open('https://docs.google.com/gview?embedded=true&url=https://maiscafé.store/cardapio.pdf', '_blank')"
-            >
+            <button class="btn btn-primary" id="menuBtn">
               <svg
                 class="btn-icon"
                 xmlns="http://www.w3.org/2000/svg"
@@ -1011,9 +1167,9 @@
       })();
 
       // Botões
-      document.getElementById("menuBtn").addEventListener("click", function () {
-        window.open("https://example.com/cardapio", "_blank");
-      });
+      // document.getElementById("menuBtn").addEventListener("click", function () {
+      //   window.open("https://maiscafé.store/cardapio.pdf", "_blank");
+      // });
 
       document
         .getElementById("whatsappBtn")
@@ -1032,6 +1188,38 @@
             "_blank"
           );
         });
+      const menuBtn = document.getElementById("menuBtn");
+      const pdfViewerOverlay = document.getElementById("pdfViewerOverlay");
+      const pdfCloseBtn = document.getElementById("pdfCloseBtn");
+      const pdfIframe = document.getElementById("pdfIframe");
+      const pdfLoading = document.getElementById("pdfLoading");
+
+      function openPDF() {
+        pdfViewerOverlay.classList.add("active");
+        document.body.style.overflow = "hidden";
+        pdfIframe.src = "cardapio.pdf";
+        pdfIframe.onload = () =>
+          setTimeout(() => (pdfLoading.style.display = "none"), 500);
+      }
+
+      function closePDF() {
+        pdfViewerOverlay.classList.remove("active");
+        document.body.style.overflow = "";
+        setTimeout(() => {
+          pdfIframe.src = "";
+          pdfLoading.style.display = "flex";
+        }, 600);
+      }
+
+      menuBtn.addEventListener("click", openPDF);
+      pdfCloseBtn.addEventListener("click", closePDF);
+      pdfViewerOverlay.addEventListener("click", (e) => {
+        if (e.target === pdfViewerOverlay) closePDF();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && pdfViewerOverlay.classList.contains("active"))
+          closePDF();
+      });
     </script>
   </body>
 </html>
