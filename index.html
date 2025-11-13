@@ -719,16 +719,18 @@
         border: none;
         overflow: hidden;
         background: #f5f5f5;
-        transform-origin: top center;
+        object-fit: contain;
       }
 
-      /* 📱 Ajuste fino específico para iOS e Android */
+      /* 🔧 Correção iOS Safari – impede o zoom e ajusta ao viewport */
       @supports (-webkit-touch-callout: none) {
         .pdf-iframe {
           width: 100vw !important;
           height: 100vh !important;
-          transform: scale(0.98); /* se ainda cortar, reduza para 0.96 */
-          transform-origin: top center;
+          transform: none !important;
+          zoom: 0.95; /* ajuste fino do tamanho */
+          -webkit-transform: none !important;
+          -webkit-text-size-adjust: 100%;
         }
       }
 
