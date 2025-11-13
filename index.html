@@ -1239,11 +1239,21 @@
       document
         .getElementById("locationBtn")
         .addEventListener("click", function () {
-          window.open(
-            "https://maps.google.com/?q=Cafeteria+Mais+Cafe",
-            "_blank"
-          );
+          const isIOS =
+            /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+            (navigator.userAgent.includes("Mac") && "ontouchend" in document);
+
+          const appleMapsURL = "https://maps.apple/p/g5iR79EsiIcFoP";
+          const googleMapsURL =
+            "https://www.google.com/maps/dir/-4.0408414,-40.8657392/''/@-3.9808014,-40.9594742,12z/data=!4m9!4m8!1m1!4e1!1m5!1m1!1s0x794c9d77fc1a4bb:0xec3fa7d8f26b6ccd!2m2!1d-40.889539!2d-3.9162523?hl=pt-BR&entry=ttu&g_ep=EgoyMDI1MTEwMi4wIKXMDSoASAFQAw%3D%3D";
+
+          if (isIOS) {
+            window.open(appleMapsURL, "_blank"); // 🍎 Abre no Apple Maps
+          } else {
+            window.open(googleMapsURL, "_blank"); // 🤖 Abre no Google Maps
+          }
         });
+
       const menuBtn = document.getElementById("menuBtn");
       const pdfViewerOverlay = document.getElementById("pdfViewerOverlay");
       const pdfCloseBtn = document.getElementById("pdfCloseBtn");
